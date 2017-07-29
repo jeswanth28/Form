@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- Jquery plugin for bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <!-- Minified version angular js Library link -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.js"></script>
+
+
+    <script src="main.js"></script>
+
+</head>
+
+<body ng-app="FormApp">
+    <div ng-controller="FormController">
+        <div class="container">
+            <div class="row">
+                <fieldset>
+                    <legend>Form</legend>
+                    <form class="form-horizontal" name="userForm" ng-submit="submitForm()" novalidate>
+
+                        <!-- Full Name -->
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-lg-2 control-label">Full Name</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="userFullName" placeholder="Full Name" ng-model="user.fullname">
+                            </div>
+                        </div>
+
+                        <!-- UserName -->
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.userName.$invalid && userForm.userName.$dirty }">
+                            <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="userName" placeholder="User Name" ng-model="user.name" required>
+
+                                <p ng-show="userForm.userName.$dirty && userForm.userName.$invalid" class="help-block">User name is Required.</p>
+                            </div>
+                        </div>
+
+                        <!--Email-->
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.userEmail.$invalid && userForm.userEmail.$dirty }">
+                            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                            <div class="col-lg-4">
+                                <input type="email" class="form-control" name="userEmail" placeholder="Email" ng-model="user.email" required>
+                                <p ng-show="userForm.userEmail.$dirty && userForm.userEmail.$invalid" class="help-block">Enter the mail.</p>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <!--Password-->
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.userPassword.$invalid && userForm.userPassword.$dirty }">
+                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                            <div class="col-lg-4">
+                                <input type="password" class="form-control" name="userPassword" placeholder="Password" ng-model="user.password" ng-change="analyze(user.password)"
+                                    minlength="5" required>
+                                <p ng-show="userForm.userPassword.$dirty && userForm.userPassword.$invalid" class="help-block">Enter the mail and minum 5 charcters.</p>
+                                <div> {{passstr}}</div>
+                                </div>
+                        </div>
+
+                        <!--button-->
+
+                        <div class="form-group">
+                            <div class="col-lg-4 col-lg-offset-2">
+                                <button class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </fieldset>
+            </div>
+
+        </div>
+
+
+        <fieldset>
+            <legend>Table</legend>
+
+            <!--Code for displaying form data in the form of table-->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>FullName</th>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat=" users in usersArray track by  $index">
+
+                        <td>{{users.fullname}}</td>
+                        <td>{{users.name}}</td>
+                        <td>{{users.email}}</td>
+                        <td>{{users.password}}</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editSelect(users)">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="deleteSelect(users)">Delete</button>
+                        </td>
+
+                </tbody>
+            </table>
+        </fieldset>
+
+    </div>
+</body>
+
+</html>
